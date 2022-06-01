@@ -143,40 +143,16 @@ public class MainConfig {
         return config.getString("reward-gui.command-override." + command);
     }
 
-    public Material getSellAllMaterial() {
-        String s = config.getString("gui.sell-all-item");
-        if (s != null) {
-            try {
-                return Material.valueOf(s);
-            } catch (IllegalArgumentException exception) {
-                EvenMoreFish.logger.log(Level.SEVERE, s + " is not a valid material type in config.yml gui.sell-all-item.");
-            }
-        }
-        return Material.COD_BUCKET;
+    public String getSellAllMaterial() {
+        return config.getString("gui.sell-all-item", "COD_BUCKET");
     }
 
-    public Material getSellAllConfirmMaterial() {
-        String s = config.getString("gui.sell-all-item-confirm");
-        if (s != null) {
-            try {
-                return Material.valueOf(s);
-            } catch (IllegalArgumentException exception) {
-                EvenMoreFish.logger.log(Level.SEVERE, s + " is not a valid material type in config.yml gui.sell-all-item-confirm.");
-            }
-        }
-        return Material.TROPICAL_FISH_BUCKET;
+    public String getSellAllConfirmMaterial() {
+        return config.getString("gui.sell-all-item-confirm", "TROPICAL_FISH_BUCKET");
     }
 
-    public Material getSellAllErrorMaterial() {
-        String s = config.getString("gui.sell-all-item-error");
-        if (s != null) {
-            try {
-                return Material.valueOf(s);
-            } catch (IllegalArgumentException exception) {
-                EvenMoreFish.logger.log(Level.SEVERE, s + " is not a valid material type in config.yml gui.sell-all-item-confirm.");
-            }
-        }
-        return Material.SALMON_BUCKET;
+    public String getSellAllErrorMaterial() {
+        return config.getString("gui.sell-all-item-error", "SALMON_BUCKET");
     }
 
     public int getSellAllSlot() {

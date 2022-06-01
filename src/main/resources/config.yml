@@ -38,6 +38,7 @@ enable-economy: true
 barstyle: 'SEGMENTED_10'
 
 # For customizing the /emf shop GUI
+# Custom model data also can be add to item e.g: SUGAR:1 GOLD_INGOT:10
 gui:
   # Fills the empty slots of a normal /emf shop
   filler: GRAY_STAINED_GLASS_PANE

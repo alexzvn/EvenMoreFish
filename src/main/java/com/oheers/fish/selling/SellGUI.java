@@ -55,8 +55,8 @@ public class SellGUI implements InventoryHolder {
 
     public void setFiller() {
         // the gray glass panes at the bottom
-        ItemStack fill = new ItemStack(Material.valueOf(EvenMoreFish.mainConfig.getFiller()));
-        ItemStack error = new ItemStack(Material.valueOf(EvenMoreFish.mainConfig.getFillerError()));
+        ItemStack fill = createItem(EvenMoreFish.mainConfig.getFiller());
+        ItemStack error = createItem(EvenMoreFish.mainConfig.getFillerError());
         ItemMeta fillMeta = fill.getItemMeta();
         ItemMeta errMeta = error.getItemMeta();
         fillMeta.setDisplayName(ChatColor.RESET + "");
@@ -79,7 +79,7 @@ public class SellGUI implements InventoryHolder {
     }
 
     public void setSellItem() {
-        ItemStack sIcon = new ItemStack(Material.valueOf(EvenMoreFish.mainConfig.getSellItem()));
+        ItemStack sIcon = createItem(EvenMoreFish.mainConfig.getSellItem());
         ItemMeta sellMeta = sIcon.getItemMeta();
         sellMeta.setDisplayName(new Message(ConfigMessage.WORTH_GUI_SELL_BUTTON_NAME).getRawMessage(true, false));
 
@@ -97,7 +97,7 @@ public class SellGUI implements InventoryHolder {
     }
 
     public void setSellAllItem() {
-        ItemStack saIcon = new ItemStack(EvenMoreFish.mainConfig.getSellAllMaterial());
+        ItemStack saIcon = createItem(EvenMoreFish.mainConfig.getSellAllMaterial());
         ItemMeta saMeta = saIcon.getItemMeta();
         saMeta.setDisplayName(new Message(ConfigMessage.WORTH_GUI_SELL_ALL_BUTTON_NAME).getRawMessage(true, false));
 
@@ -168,8 +168,8 @@ public class SellGUI implements InventoryHolder {
         if (totalWorth.equals("0.0")) {
 
             ItemStack error;
-            if (sellAll) error = new ItemStack(EvenMoreFish.mainConfig.getSellAllErrorMaterial());
-            else error = new ItemStack(Material.valueOf(EvenMoreFish.mainConfig.getSellItemError()));
+            if (sellAll) error = createItem(EvenMoreFish.mainConfig.getSellAllErrorMaterial());
+            else error = createItem(EvenMoreFish.mainConfig.getSellItemError());
 
             ItemMeta errorMeta = error.getItemMeta();
 
@@ -190,8 +190,8 @@ public class SellGUI implements InventoryHolder {
         } else {
 
             ItemStack confirm;
-            if (sellAll) confirm = new ItemStack(EvenMoreFish.mainConfig.getSellAllConfirmMaterial());
-            else confirm = new ItemStack(Material.valueOf(EvenMoreFish.mainConfig.getSellItemConfirm()));
+            if (sellAll) confirm = createItem(EvenMoreFish.mainConfig.getSellAllConfirmMaterial());
+            else confirm = createItem(EvenMoreFish.mainConfig.getSellItemConfirm());
 
             ItemMeta cMeta = confirm.getItemMeta();
             if (sellAll) cMeta.setDisplayName(new Message(ConfigMessage.WORTH_GUI_CONFIRM_ALL_BUTTON_NAME).getRawMessage(true, false));
@@ -346,6 +346,25 @@ public class SellGUI implements InventoryHolder {
         }
 
         return this.value != 0.0;
+    }
+
+    protected ItemStack createItem(String material) {
+        String[] names = material.split(":");
+
+        if (names.length < 2) {
+            return new ItemStack(Material.valueOf(names[0]));
+        }
+
+        String name = names[0];
+        int customData = Integer.parseInt(names[1]);
+
+        ItemStack item = new ItemStack(Material.valueOf(name));
+        ItemMeta meta =  item.getItemMeta();
+
+        meta.setCustomModelData(customData);
+        item.setItemMeta(meta);
+
+        return item;
     }
 
     @Override
